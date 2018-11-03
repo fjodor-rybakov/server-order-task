@@ -1,0 +1,26 @@
+{
+  "name": "server-order-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fjodor-rybakov/server-order-task.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fjodor-rybakov/server-order-task/issues"
+  },
+  "homepage": "https://github.com/fjodor-rybakov/server-order-task#readme",
+  "dependencies": {
+    "mysql": "^2.16.0",
+    "restify": "^7.2.2",
+    "restify-errors": "^6.1.1",
+    "restify-jwt-community": "^1.0.8"
+  }
+}
