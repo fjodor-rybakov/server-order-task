@@ -32,15 +32,15 @@ exports.checkUser = function (database, data, next) {
             if (result.length === 0) {
                 return reject(undefined);
             } else {
-                return resolve(data);
+                return resolve(result);
             }
         })
     })
 };
 
-exports.getProfile = function (database, data, next) {
+exports.getProfile = function (database, id_user, next) {
     return new Promise(async (resolve, reject) => {
-        let sql = `SELECT * FROM user WHERE id_user = ${data.id}`;
+        let sql = `SELECT * FROM user WHERE id_user = ${id_user}`;
         await database.query(sql, function (err, result) {
             if (err) {
                 return next(new errs.BadGatewayError(err));

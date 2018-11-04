@@ -13,13 +13,22 @@ module.exports = (server, database, secret) => {
 
     function getProfile(req, res, next) {
         const data = JSON.parse(req.body);
-        requestsDB.getProfile(database, data, next)
-            .then((data) => {
-                res.send(data[0]);
-            })
-            .catch(() => {
-                res.send("err");
-            });
+        console.log(data);
+        try {
+            const dataUser = jwt.verify(data.token, secret);
+            const id_user = dataUser.id_user;
+            console.log(dataUser);
+            requestsDB.getProfile(database, id_user, next)
+                .then((data) => {
+                    res.send(data[0]);
+                })
+                .catch(() => {
+                    res.send("err");
+                });
+        } catch (e) {
+            console.log(e);
+            return next(new errs.UnauthorizedError("token expired"));
+        }
     }
 
     function getProject(req, res, next) {
@@ -63,13 +72,17 @@ module.exports = (server, database, secret) => {
             return next(new errs.InvalidArgumentError("Not enough body data"));
         }
         requestsDB.checkUser(database, data, next)
-            .then((data) => {
-                console.log(data);
-                let token = jwt.sign(data, secret, {
-                    expiresIn: '1m'
+            .then((dataUser) => {
+                const newDataUser = {
+                    id_user: dataUser[0].id_user,
+                    id_role: dataUser[0].id_role
+                };
+                let token = jwt.sign(newDataUser, secret, {
+                    expiresIn: '5m'
                 });
-                let {iat, exp} = jwt.decode(token);
-                res.send({iat, exp, token})
+                console.log(jwt.decode(token));
+                let {exp, id_user, id_role} = jwt.decode(token);
+                res.send({exp, token})
             })
             .catch(() => {
                 return next(new errs.InvalidArgumentError("Unknown user"));
