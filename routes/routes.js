@@ -10,6 +10,18 @@ module.exports = (server, database, secret) => {
     server.get("/api/getProjects", getProjectList);
     server.post("/api/getProject", getProject);
     server.post("/api/updateProfile", updateProfile);
+    server.post("/api/getUserListByRole", getUserListByRole);
+
+    function getUserListByRole(req, res, next) {
+        const data = JSON.parse(req.body);
+        requestsDB.getUserListByRole(database, next, data.role)
+            .then((data) => {
+                res.send(data);
+            })
+            .catch(() => {
+                res.send("err");
+            });
+    }
 
     function getAuthorization(req, res, next) {
         const data = JSON.parse(req.body);

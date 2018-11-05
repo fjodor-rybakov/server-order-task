@@ -97,3 +97,19 @@ exports.updateProfile = function (database, data) {
         })
     })
 };
+
+exports.getUserListByRole = function (database, next, role) {
+    return new Promise(async (resolve) => {
+        let sql = `SELECT user.last_name, user.name
+                    FROM role
+                    LEFT JOIN user 
+                    on user.id_role = role.id_role
+                    where role.name = '${role}'`;
+        await database.query(sql, function (err, result) {
+            if (err) {
+                return next(new errs.BadGatewayError(err));
+            }
+            return resolve(result);
+        })
+    })
+};
