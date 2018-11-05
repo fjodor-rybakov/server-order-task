@@ -15,17 +15,6 @@ server.use(plugins.queryParser());
 server.use(plugins.bodyParser());
 server.use(plugins.authorizationParser());
 server.use(plugins.multipartBodyParser());
-/*server.use(rjwt(config.jwt).unless({
-    path: [
-        '/',
-        '/dist/bundle.js',
-        '/api/signIn',
-        '/api/signUp',
-        '/api/getProjects',
-        '/api/getProject',
-        '/api/updateProfile'
-    ]
-}));*/
 
 server.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");

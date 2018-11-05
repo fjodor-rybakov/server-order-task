@@ -100,7 +100,7 @@ exports.updateProfile = function (database, data) {
 
 exports.getUserListByRole = function (database, next, role) {
     return new Promise(async (resolve) => {
-        let sql = `SELECT user.last_name, user.name
+        let sql = `SELECT user.last_name, user.first_name
                     FROM role
                     LEFT JOIN user 
                     on user.id_role = role.id_role
