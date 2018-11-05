@@ -6,12 +6,12 @@ const errs = require('restify-errors'),
 module.exports = (server, database, secret) => {
     server.post("/api/signUp", getSignUp);
     server.post("/api/signIn", getSignIn);
-    server.post("/api/profile", getProfile);
+    server.post("/api/authorization", getAuthorization);
     server.get("/api/getProjects", getProjectList);
     server.post("/api/getProject", getProject);
     server.post("/api/updateProfile", updateProfile);
 
-    function getProfile(req, res, next) {
+    function getAuthorization(req, res, next) {
         const data = JSON.parse(req.body);
         console.log(data);
         try {
